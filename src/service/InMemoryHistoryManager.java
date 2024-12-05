@@ -18,11 +18,9 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (historyList.containsKey(task.getId())) {
             removeNode(historyList.get(task.getId()));
         }
-
-        // Создаем новый узел для задачи
         Node newNode = new Node(task);
-        linkLast(newNode); // Добавляем узел в конец списка
-        historyList.put(task.getId(), newNode); // Обновляем HashMap
+        linkLast(newNode);
+        historyList.put(task.getId(), newNode);
     }
 
     @Override
@@ -53,12 +51,12 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (node.getPrev() != null) {
             node.getPrev().setNext(node.getNext());
         } else {
-            head = node.getNext(); // Если удаляем head, обновляем head
+            head = node.getNext();
         }
         if (node.getNext() != null) {
             node.getNext().setPrev(node.getPrev());
         } else {
-            tail = node.getPrev(); // Если удаляем tail, обновляем tail
+            tail = node.getPrev();
         }
     }
 
