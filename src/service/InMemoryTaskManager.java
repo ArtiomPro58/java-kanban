@@ -1,8 +1,14 @@
 package service;
 
-import java.util.*;
+import model.Epic;
+import model.Status;
+import model.Subtask;
+import model.Task;
 
-import model.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class InMemoryTaskManager implements TaskManager {
@@ -34,7 +40,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Subtask> getEpicSubtasks(Epic epic){
+    public List<Subtask> getEpicSubtasks(Epic epic) {
         return epic.getSubtaskList();
     }
 
