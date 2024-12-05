@@ -98,18 +98,18 @@ public class InMemoryHistoryManagerTest {
 
         historyManager.add(task1);
         historyManager.add(task2);
-        historyManager.remove(1);
+        historyManager.remove(1); // Удаляем task1
 
         List<Task> history = historyManager.getHistory();
         assertEquals(1, history.size());
-        assertFalse(history.contains(task1));
+        assertFalse(history.contains(task1)); // task1 должен быть удален
         assertTrue(history.contains(task2));
     }
 
     @Test
     void testGetHistoryEmpty() {
         List<Task> history = historyManager.getHistory();
-        assertTrue(history.isEmpty());
+        assertTrue(history.isEmpty()); // История должна быть пустой
     }
 
     @Test
@@ -121,13 +121,13 @@ public class InMemoryHistoryManagerTest {
         historyManager.add(task1);
         historyManager.add(task2);
         historyManager.add(task3);
-        historyManager.remove(2);
+        historyManager.remove(2); // Удаляем task2
 
         List<Task> history = historyManager.getHistory();
         assertEquals(2, history.size());
         assertTrue(history.contains(task1));
         assertTrue(history.contains(task3));
-        assertFalse(history.contains(task2));
+        assertFalse(history.contains(task2)); // task2 должен быть удален
     }
 
 }

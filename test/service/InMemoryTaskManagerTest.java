@@ -1,17 +1,11 @@
 package test.service;
 
-import model.Epic;
-import model.Status;
-import model.Subtask;
-import model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import service.Managers;
-import service.TaskManager;
-
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
+import model.*;
+import service.*;
+import java.util.List;
 
 public class InMemoryTaskManagerTest {
 
@@ -160,7 +154,7 @@ public class InMemoryTaskManagerTest {
 
 
     @Test
-    void taskCreatedAndTaskAddedShouldHaveSameVariables() {
+    void TaskCreatedAndTaskAddedShouldHaveSameVariables() {
         Task expected = new Task(1, "Помыть полы", "С новым средством", Status.DONE);
         taskManager.addTask(expected);
         List<Task> list = taskManager.getAllTasks();
