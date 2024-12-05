@@ -9,26 +9,14 @@ import java.util.List;
 public class InMemoryHistoryManagerTest {
 
     private static TaskManager taskManager;
+    private static InMemoryHistoryManager historyManager;
 
     @BeforeEach
     public void beforeEach() {
+        historyManager = Managers.getDefaultHistory();
         taskManager = Managers.getDefault();
     }
 
-    @Test
-    public void getHistoryShouldReturnListOf10Tasks() {
-        for (int i = 0; i < 20; i++) {
-            taskManager.addTask(new Task("Some name", "Some description"));
-        }
-
-        List<Task> tasks = taskManager.getAllTasks();
-        for (Task task : tasks) {
-            taskManager.getTaskById(task.getId());
-        }
-
-        List<Task> list = taskManager.getHistory();
-        assertEquals(10, list.size(), "Неверное количество элементов в истории ");
-    }
 
     @Test
     public void getHistoryShouldReturnOldTaskAfterUpdate() {
@@ -77,4 +65,69 @@ public class InMemoryHistoryManagerTest {
         assertEquals(flatRenovationSubtask3.getDescription(), oldSubtask.getDescription(),
                 "В истории не сохранилась старая версия эпика");
     }
+
+    @Test
+    void testAddTask() {
+        Task task1 = new Task(1);
+        Task task2 = new Task(2);
+
+        historyManager.add(task1);
+        historyManager.add(task2);
+
+        List<Task> history = historyManager.getHistory();
+        assertEquals(2, history.size());
+        assertTrue(history.contains(task1));
+        assertTrue(history.contains(task2));
+    }
+
+    @Test
+    void testAddDuplicateTask() {
+        Task washFloor = new Task("Написать проект", "Сдать в срок");
+        taskManager.addTask(washFloor);
+        taskManager.getTaskById(washFloor.getId());
+        taskManager.getTaskById(washFloor.getId());
+        List<Task> task = taskManager.getHistory();
+        assertEquals(1, task.size());
+
+    }
+
+    @Test
+    void testRemoveTask() {
+        Task task1 = new Task(1);
+        Task task2 = new Task(2);
+
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.remove(1); // Удаляем task1
+
+        List<Task> history = historyManager.getHistory();
+        assertEquals(1, history.size());
+        assertFalse(history.contains(task1)); // task1 должен быть удален
+        assertTrue(history.contains(task2));
+    }
+
+    @Test
+    void testGetHistoryEmpty() {
+        List<Task> history = historyManager.getHistory();
+        assertTrue(history.isEmpty()); // История должна быть пустой
+    }
+
+    @Test
+    void testGetHistoryAfterRemoval() {
+        Task task1 = new Task(1);
+        Task task2 = new Task(2);
+        Task task3 = new Task(3);
+
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task3);
+        historyManager.remove(2); // Удаляем task2
+
+        List<Task> history = historyManager.getHistory();
+        assertEquals(2, history.size());
+        assertTrue(history.contains(task1));
+        assertTrue(history.contains(task3));
+        assertFalse(history.contains(task2)); // task2 должен быть удален
+    }
+
 }
