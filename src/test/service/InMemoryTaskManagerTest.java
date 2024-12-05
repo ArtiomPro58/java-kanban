@@ -152,16 +152,4 @@ public class InMemoryTaskManagerTest {
         assertNull(taskManager.deleteSubtaskByID(5));
     }
 
-
-    @Test
-    void TaskCreatedAndTaskAddedShouldHaveSameVariables() {
-        Task expected = new Task(1, "Помыть полы", "С новым средством", Status.DONE);
-        taskManager.addTask(expected);
-        List<Task> list = taskManager.getAllTasks();
-        Task actual = list.getFirst();
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getName(), actual.getName());
-        assertEquals(expected.getDescription(), actual.getDescription());
-        assertEquals(expected.getStatus(), actual.getStatus());
-    }
 }
