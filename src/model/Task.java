@@ -20,6 +20,11 @@ public class Task {
         this.status = Status.NEW;
     }
 
+    public Task(int id) {
+        this.id = id;
+    }
+
+
     public int getId() {
         return id;
     }
