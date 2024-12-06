@@ -1,9 +1,12 @@
 package test.service;
+
 import model.*;
 import service.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.List;
 
 public class InMemoryHistoryManagerTest {
@@ -91,7 +94,7 @@ public class InMemoryHistoryManagerTest {
     }
 
     @Test
-    void testRemoveAllTask(){
+    void testRemoveAllTask() {
         Task washFloor = new Task("Написать проект", "Сдать в срок");
         Task goToTeach = new Task("пойти в школу", "Учить информатику");
         Epic flatRenovation = new Epic("Новая задача", "Проверить");
