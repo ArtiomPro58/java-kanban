@@ -1,10 +1,13 @@
 package service;
 
-import model.*;
+import model.Epic;
+import model.Subtask;
+import model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class InMemoryHistoryManager implements HistoryManager {
@@ -15,12 +18,10 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void add(Task task) {
-        if (historyList.containsKey(task.getId())) {
-            removeNode(historyList.get(task.getId()));
-        }
-        Node newNode = new Node(task);
-        linkLast(newNode);
-        historyList.put(task.getId(), newNode);
+        final int id = task.getId();
+        removeNode(historyList.get(id));
+        linkLast(task);
+        historyList.put(task.getId(), tail);
     }
 
     @Override
@@ -31,6 +32,29 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 
+    @Override
+    public void removeTasks(Map<Integer, Task> tasks) {
+        head = null;
+        tail = null;
+        historyList.clear();
+    }
+
+    @Override
+    public void removeEpics(Map<Integer, Epic> epics, Map<Integer, Subtask> subtasks) {
+        for (Epic epic : epics.values()) {
+            remove(epic.getId());
+            for (Subtask subtask : epic.getSubtaskList()) {
+                remove(subtask.getId());
+            }
+        }
+    }
+
+    @Override
+    public void removeSubtasks(Map<Integer, Subtask> subtasks) {
+        for (Subtask subtask : subtasks.values()) {
+            remove(subtask.getId());
+        }
+    }
 
     @Override
     public List<Task> getHistory() {
@@ -48,6 +72,9 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private void removeNode(Node node) {
+        if (node == null) {
+            return;
+        }
         if (node.getPrev() != null) {
             node.getPrev().setNext(node.getNext());
         } else {
@@ -60,17 +87,17 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 
-    private void linkLast(Node node) {
+    private void linkLast(Task task) {
+        Node newNode = new Node(task);
         if (tail == null) {
-            head = node;
-            tail = node;
+            head = newNode;
+            tail = newNode;
         } else {
-            tail.setNext(node);
-            node.setPrev(tail);
-            tail = node;
+            tail.setNext(newNode);
+            newNode.setPrev(tail);
+            tail = newNode;
         }
     }
-
 }
 
 
