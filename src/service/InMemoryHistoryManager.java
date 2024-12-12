@@ -1,13 +1,10 @@
 package service;
 
-import model.Epic;
-import model.Subtask;
 import model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class InMemoryHistoryManager implements HistoryManager {
@@ -29,30 +26,6 @@ public class InMemoryHistoryManager implements HistoryManager {
         Node nodeToRemove = historyList.remove(id);
         if (nodeToRemove != null) {
             removeNode(nodeToRemove);
-        }
-    }
-
-    @Override
-    public void removeTasks(Map<Integer, Task> tasks) {
-        head = null;
-        tail = null;
-        historyList.clear();
-    }
-
-    @Override
-    public void removeEpics(Map<Integer, Epic> epics, Map<Integer, Subtask> subtasks) {
-        for (Epic epic : epics.values()) {
-            remove(epic.getId());
-            for (Subtask subtask : epic.getSubtaskList()) {
-                remove(subtask.getId());
-            }
-        }
-    }
-
-    @Override
-    public void removeSubtasks(Map<Integer, Subtask> subtasks) {
-        for (Subtask subtask : subtasks.values()) {
-            remove(subtask.getId());
         }
     }
 
