@@ -154,7 +154,7 @@ public class InMemoryTaskManagerTest {
 
 
     @Test
-    void taskCreatedAndTaskAddedShouldHaveSameVariables() {
+    void TaskCreatedAndTaskAddedShouldHaveSameVariables() {
         Task expected = new Task(1, "Помыть полы", "С новым средством", Status.DONE);
         taskManager.addTask(expected);
         List<Task> list = taskManager.getAllTasks();
