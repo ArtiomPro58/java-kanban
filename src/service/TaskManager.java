@@ -1,6 +1,7 @@
 package service;
 
 import model.*;
+import service.memory.ManagerSaveException;
 
 import java.util.List;
 
@@ -25,23 +26,23 @@ public interface TaskManager {
 
     Subtask getSubtaskById(int id);
 
-    Task addTask(Task task);
+    Task addTask(Task task) throws ManagerSaveException;
 
-    Epic addEpic(Epic epic);
+    Epic addEpic(Epic epic) throws ManagerSaveException;
 
-    Subtask addSubtask(Subtask subtask);
+    Subtask addSubtask(Subtask subtask) throws ManagerSaveException;
 
-    Epic updateEpic(Epic epic);
+    Epic updateEpic(Epic epic) throws ManagerSaveException;
 
-    Task updateTask(Task task);
+    Task updateTask(Task task) throws ManagerSaveException;
 
-    Subtask updateSubtask(Subtask subtask);
+    Subtask updateSubtask(Subtask subtask) throws ManagerSaveException;
 
-    Task deleteTaskByID(int id);
+    Task deleteTaskByID(int id) throws ManagerSaveException;
 
-    Epic deleteEpicByID(int id);
+    Epic deleteEpicByID(int id) throws ManagerSaveException;
 
-    Subtask deleteSubtaskByID(int id);
+    Subtask deleteSubtaskByID(int id) throws ManagerSaveException;
 
     List<Task> getHistory();
 }
